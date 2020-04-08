@@ -1,16 +1,29 @@
 ///Function to randomize tiles
-//Function to move tiles
+
 /*Function to declare winner (title values 
-    back in original properties.) */
+    back in original properties.) 
+    
+    Click handler for each tile-click tile and relay the tiles index in the tiles
+    array to the component that maintains state.
+    Associate the tile with the index in the array
+    find the position with the array of the clicked tiles
+    tiles[clickedItemIndex].currentPos(return 8)
 
+    function to check position of tile
+      
+find pos of blank tile
+      -loop through tile, return the index of the blank tile(index 1)
+        -return the index item[i].currentPos == 0
+         - blank obj is  = tiles[blankItemIndex] // id, CurrentPos, winPos, type.
 
-
-
+    TILE-
+    find black tile position--need position of col and row so you
+    cant change between end of row/beginning of neighbor row
+    */
 
 import React, { Component } from 'react';
-import { Container, Col, Row } from 'reactstrap';
-
-
+import {Col, Row } from 'reactstrap';
+import Tile from './Tile.js'
 
 
 class Board extends Component {
@@ -24,30 +37,24 @@ class Board extends Component {
     }
 
 
-    /*how do I want to build a board to make it 
-    1. responsive
-    2. dry and rendered
-    3 the state needs to be set.
-    4.create an array that holds the index of the tiles
-    5. loop through the 16 numbers  in num and push
-    the indexes to the newTile array.
-    6. buildBoard needs to be async as setState cant run before
-    the for loop is finished. Once the for loop is finished
-    and index has been moved to newTiles array, then state can
-    send newTiles to the Tiles array.
-    7. Once the component mounts, then the board can be built.
+    // tileSwap() {
+    //     //Function to move tiles-how to think of the problem
+    // }
 
-
-    */
     async buildBoard() {
         var newTiles = [];
         var num = 16;
 
         for (let i = 0; i < num; i++) {
-            //  if(i of num ===  15){
-            //     i ="tr"
-            // }
-            newTiles.push(i);
+            let tileObj = {
+                id: i,
+                currentPos: i,
+                winPos: i,
+                type: "regular"
+            }
+
+            newTiles.push(tileObj);
+
         }
         await this.setState({
             tiles: newTiles
@@ -56,39 +63,25 @@ class Board extends Component {
         console.log(this.state.tiles)
     }
 
+    handleClick(e){
+        //this.props.tileSwap()
+        console.log("button was clicked")
+    }
     componentDidMount() {
         this.buildBoard()
     }
 
-    /*What do I want to render?
-    4 rows- each row with 4 columns.
-    What do I need to render the board?
-    react strap Row and Col
-    map over the tiles(item, index), create Col with key, id, i.
-    
-    */
     render() {
         return (
             <React.Fragment>
                 <Row><Col xs className="text-info" >{"Puzzle Slider"}</Col></Row>
                 <Row className="m-2">
                     {this.state.tiles.map((item, i) => (
-                        <Col
-                            xs="3"
-                            className="border makeBigger"
-                            key={i}
-                            id={item}
-                        >
-                            {"This is Index " + i}
-                        </Col>
+                        <Tile key={i} onClick={this.handleClick} i={i} item={item} />
                     ))}
                 </Row>
             </React.Fragment>
         )
-
     }
-
 }
-
-
 export default Board;
