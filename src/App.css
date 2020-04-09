@@ -1,15 +1,31 @@
 .App {
   text-align: center;
-
+margin: 20px;
   
 }
 
-.makeBigger{
-  min-height:150px;
-  color:green;
-  background-color: aqua;
-}
 
+.title{
+text-shadow:black 3px 3px;
+  color: rgb(170, 14, 14);
+  background-color:lightgray;
+  font-weight: bolder;
+  font-size: .35in;
+ border-radius: 20px;
+border-style: dotted;
+
+
+}
+.makeBigger{
+ height:200px 200px;
+ 
+  color:black;
+  background-color:lightgrey;
+  text-shadow: rgb(170, 14, 14) 3px 3px;
+font-size:.5in;
+
+
+}
 
 
 

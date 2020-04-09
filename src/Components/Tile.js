@@ -5,14 +5,26 @@ import { Col } from 'reactstrap';
 class Tile extends React.Component {
     constructor (props){
         super (props);
-        this.handleClick= this.handleClick.bind(this);
+        this.handleClick=this.handleClick.bind(this)
+        this.state={
+            position: -1
+        }
+    }
+componentDidMount(){
+    this.setState({
+        position: this.props.tileObj.currentPos
+    })
+}
+
+
+    handleClick(e){
+        e.preventDefault()
+       this.props.tileSwap(this.state.position)
+     
+
     }
 
 
-handleClick(e){
-    //this.props.tileSwap()
-    console.log("button was clicked")
-}
 
 render () {
     return(
@@ -22,10 +34,10 @@ render () {
         className="border makeBigger"
         key={this.props.i}
         id={this.props.item}
-       // onClick={this.handleClick}
+       onClick={this.handleClick}
 
     >
-        {"This is Index " + this.props.i}
+        { this.props.i}
     </Col>
     )
 }

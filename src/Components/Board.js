@@ -1,26 +1,3 @@
-///Function to randomize tiles
-
-/*Function to declare winner (title values 
-    back in original properties.) 
-    
-    Click handler for each tile-click tile and relay the tiles index in the tiles
-    array to the component that maintains state.
-    Associate the tile with the index in the array
-    find the position with the array of the clicked tiles
-    tiles[clickedItemIndex].currentPos(return 8)
-
-    function to check position of tile
-      
-find pos of blank tile
-      -loop through tile, return the index of the blank tile(index 1)
-        -return the index item[i].currentPos == 0
-         - blank obj is  = tiles[blankItemIndex] // id, CurrentPos, winPos, type.
-
-    TILE-
-    find black tile position--need position of col and row so you
-    cant change between end of row/beginning of neighbor row
-    */
-
 import React, { Component } from 'react';
 import {Col, Row } from 'reactstrap';
 import Tile from './Tile.js'
@@ -33,13 +10,14 @@ class Board extends Component {
             tiles: [] //empty array for tiles
 
         }
-
+        this.tileSwap=this.tileSwap.bind(this);
     }
 
 
-    // tileSwap() {
-    //     //Function to move tiles-how to think of the problem
-    // }
+    tileSwap(currentClick) {
+        var clickedObj = this.state.tiles[currentClick].winPos
+   console.log(clickedObj )
+    }
 
     async buildBoard() {
         var newTiles = [];
@@ -56,6 +34,16 @@ class Board extends Component {
             newTiles.push(tileObj);
 
         }
+
+      
+     if(newTiles[newTiles.length -1].type === "regular"){
+         newTiles[newTiles.length -1].type = "blank";
+         newTiles[newTiles.length -1].id = "blank";
+    
+     }
+    
+
+
         await this.setState({
             tiles: newTiles
         })
@@ -63,10 +51,6 @@ class Board extends Component {
         console.log(this.state.tiles)
     }
 
-    handleClick(e){
-        //this.props.tileSwap()
-        console.log("button was clicked")
-    }
     componentDidMount() {
         this.buildBoard()
     }
@@ -74,10 +58,20 @@ class Board extends Component {
     render() {
         return (
             <React.Fragment>
-                <Row><Col xs className="text-info" >{"Puzzle Slider"}</Col></Row>
+            
+                <Row><Col 
+                xs={{offset:1, size:10}} 
+                className=" title p-4 " >
+                {"Puzzle Slider"}
+                </Col></Row>
                 <Row className="m-2">
                     {this.state.tiles.map((item, i) => (
-                        <Tile key={i} onClick={this.handleClick} i={i} item={item} />
+                        <Tile 
+                        key={i} 
+                        tileSwap={this.tileSwap}
+                        i={i} 
+                        tileObj={item} />
+                    
                     ))}
                 </Row>
             </React.Fragment>
