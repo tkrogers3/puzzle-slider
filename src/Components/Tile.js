@@ -17,9 +17,10 @@ componentDidMount(){
 }
 
 
-    handleClick(e){
+    handleClick(e){  // position of the t
         e.preventDefault()
-       this.props.tileSwap(this.state.position)
+       this.props.tileSwap(this.state.position) 
+      console.log(this.state.position + " Current position is here")
      
 
     }
@@ -37,7 +38,7 @@ render () {
        onClick={this.handleClick}
 
     >
-        { this.props.i}
+        { this.props.tileObj.currentPos }
     </Col>
     )
 }
