@@ -1,11 +1,14 @@
 .App {
   text-align: center;
-margin: 20px;
-  
+  margin: 10px;
+  padding:50px;
+    
 }
 
 
+
 .title{
+  
 text-shadow:black 3px 3px;
   color: rgb(170, 14, 14);
   background-color:lightgray;
@@ -17,16 +20,21 @@ border-style: dotted;
 
 }
 .makeBigger{
- height:200px 200px;
- 
-  color:black;
+  min-height: 15vh;
+   color:black;
   background-color:lightgrey;
-  text-shadow: rgb(170, 14, 14) 3px 3px;
-font-size:.5in;
+  text-shadow: rgb(170, 14, 14) 1px 1px;
+ 
 
 
 }
 
+#button{
+  text-shadow: black 2px 2px;
+  background-color: lightgrey;
+  color:rgb(170, 14, 14);
+  font-weight:900;
 
+}
 
 

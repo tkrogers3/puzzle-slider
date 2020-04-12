@@ -3,7 +3,6 @@ import { Col, Row } from 'reactstrap';
 import Tile from './Tile.js'
 
 
-
 class Board extends Component {
     constructor(props) {
         super(props);
@@ -14,51 +13,56 @@ class Board extends Component {
         this.tileSwap = this.tileSwap.bind(this);
     }
 
-    ///////////////////////////////////   TILE SWITCH FUNCTION   ////////////////////////////////
+                    //   TILE SWAP FUNCTION   //
     tileSwap(currentPosClick) {
+
+        //parse result of equation from decimal a to an integer
+        var clickRow = parseInt(currentPosClick / 4)
+        var clickCol = currentPosClick % 4
+
+        var indexOfBlankItem = this.state.tiles.findIndex(i => i.currentPos === 15)
+
+        var blankRow = parseInt(indexOfBlankItem / 4)
+        var blankCol = indexOfBlankItem % 4
     
-     console.log(currentPosClick)
-        
-        var clickRow = parseInt (this.state.tiles[currentPosClick].currentPos / 4) 
-        var clickCol = this.state.tiles[currentPosClick].currentPos % 4
 
-        var blankRow = parseInt (this.state.tiles[this.state.tiles.length -1].currentPos / 4) 
-        var blankCol = this.state.tiles[this.state.tiles.length -1].currentPos % 4
 
-       
         var canSwitch = false;
- 
-        if(clickRow === blankRow && Math.abs(clickCol - blankCol) === 1){
-         canSwitch = true;
 
-        } else if( blankCol === clickCol && Math.abs(clickRow - blankRow) === 1){
+        if (clickRow === blankRow && Math.abs(blankCol - clickCol) === 1) {
             canSwitch = true;
-        } 
 
-       
- 
-        if(canSwitch){   
-
-      //temp variable to hold current blank position
-      //let blank col type and pos = clickCol type and pos
-      //this.state.tiles.type     this.state.tiles.currentPos
-      //let clickCol type = blank and pos = 15
-        var tempTiles = this.state.tiles
-              var tempBlankPos = tempTiles[tempTiles.length -1].currentPos
-              tempTiles[tempTiles.length -1].currentPos = tempTiles[currentPosClick].currentPos
-              tempTiles[currentPosClick].currentPos = tempBlankPos
-              
-
-              this.setState({
-                  tiles: tempTiles
-                  
-            })
-            
+        } else if (blankCol === clickCol && Math.abs(blankRow - clickRow) === 1) {
+            canSwitch = true;
         }
-        
+
+
+        if (canSwitch) {
+ 
+            /*Create temp variable to hold current state
+            set state type of blank tile and clicked tile.
+            create temp blank tile variable to store current pos.
+            swap blank currentPos with clicked currentPos
+
+             */
+           
+            var tempTiles = this.state.tiles
+            tempTiles[indexOfBlankItem].type = "regular"
+            tempTiles[currentPosClick].type = "blank"
+            var tempBlankPos = tempTiles[indexOfBlankItem].currentPos
+            tempTiles[indexOfBlankItem].currentPos = tempTiles[currentPosClick].currentPos
+            tempTiles[currentPosClick].currentPos = tempBlankPos
+
+            this.setState({
+                tiles: tempTiles
+
+            })
+
+        }
+
     }
 
-
+                        //BUILD BOARD FUNCTION//
 
     async buildBoard() {
         var newTiles = [];
@@ -70,7 +74,6 @@ class Board extends Component {
                 currentPos: i,
                 winPos: i,
                 type: "regular",
-                text: i
             }
 
             newTiles.push(tileObj);
@@ -89,7 +92,8 @@ class Board extends Component {
             tiles: newTiles
         })
 
-        console.log(this.state.tiles)
+        
+        
     }
 
     componentDidMount() {
